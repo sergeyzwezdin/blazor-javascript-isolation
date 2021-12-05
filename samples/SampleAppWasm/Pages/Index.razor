@@ -1,0 +1,32 @@
+﻿@page "/"
+@inject IJSObjectReference<Index> JSModule
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<div>
+    Welcome to your new app.
+</div>
+
+@if (_result != null)
+{
+    <div class="text-nowrap">@_result</div>
+}
+
+<div>
+    <button class="mt-2 btn btn-primary btn-sm" @onclick="Invoke">Invoke pages's Javascript</button>
+</div>
+
+<SampleSharedComponent />
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+    private string? _result;
+
+    private async Task Invoke()
+    {
+        _result = await JSModule.Exports.run<string>(DateTime.Now.ToLongTimeString());
+    }
+}

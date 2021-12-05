@@ -1,0 +1,21 @@
+@inject IJSObjectReference<SampleSharedComponent> JSModule
+
+<div class="alert alert-primary mt-4 align-top">
+    <strong class="d-block">Sample Shared Component</strong>
+
+    @if (_result != null)
+    {
+        <div class="text-nowrap">@_result</div>
+    }
+
+    <button class="mt-2 btn btn-primary btn-sm" @onclick="Invoke">Invoke component's Javascript</button>
+</div>
+
+@code {
+    private string? _result;
+
+    private async Task Invoke()
+    {
+        _result = await JSModule.Exports.run<string>(DateTime.Now.ToLongTimeString());
+    }
+}
